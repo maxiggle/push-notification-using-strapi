@@ -1,4 +1,4 @@
-var self = window;
+var self = this;
 self.addEventListener('push', event => {
   const data = event.data.json()
   console.log('New notification', data)
