@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import AllRoutes from './components/Routes/AllRoutes';
+import { BrowserRouter } from "react-router-dom";
+import { generalContext, StateAndEndpointHOC } from './contexts/MainContext';
 
-function App() {
+function App(props) {
+  console.log(props);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <generalContext.Provider value={props}>
+          <AllRoutes />
+        </generalContext.Provider>
+      </BrowserRouter>
     </div>
   );
 }
 
-export default App;
+// eslint-disable-next-line import/no-anonymous-default-export
+export default () => <StateAndEndpointHOC app={App} />;
