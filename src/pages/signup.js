@@ -29,6 +29,7 @@ const Signup = () => {
       if(success){
         setError(null)
         subscribeUser(success.data)
+        StateManager.endpoints.getAssets()
         return;
       }
       setloading(false);

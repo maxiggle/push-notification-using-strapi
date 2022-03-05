@@ -33,6 +33,7 @@ export const StateAndEndpointHOC = (props) => {
   }
 
   const endpoints = {
+
     login: async(params, callback)=> {
       try{
         const res = await axios.post('/auth/local', params)
@@ -55,6 +56,7 @@ export const StateAndEndpointHOC = (props) => {
         throw new Error(err)
       }
     },
+
     signup: async(params, callback)=>{
       try{
         const res = await axios.post('/auth/local/register', params)
@@ -75,6 +77,7 @@ export const StateAndEndpointHOC = (props) => {
         throw new Error(err)
       }
     },
+
     getAssets: async(callback)=>{
       try{
         const res = await axios.get('/assets', config)
@@ -82,6 +85,7 @@ export const StateAndEndpointHOC = (props) => {
         if(callback && typeof callback === 'function'){
           callback(res, null)
         }
+        setState({ ...state, assets:{...state.assets, allAssets: res?.data?.data} })
         return res
       }catch(err){
         if(callback && typeof callback === 'function'){
@@ -90,10 +94,12 @@ export const StateAndEndpointHOC = (props) => {
         throw new Error(err)
       }
     },
+
     getSingleAsset: async(id, callback)=>{
       try{
         const res = await axios.get(`/assets/${id}`, config)
-        console.log('endpoint result--get', res)
+        console.log('endpoint result--get single asset', res?.data?.data)
+        setState({ ...state, assets:{...state.assets, asset: res?.data?.data} })
         if(callback && typeof callback === 'function'){
           callback(res, null)
         }
@@ -105,6 +111,7 @@ export const StateAndEndpointHOC = (props) => {
         throw new Error(err)
       }
     },
+
     deleteSingleAsset: async(id, callback)=>{
       try{
         const res = await axios.delete(`/assets/${id}`, config)
@@ -120,6 +127,7 @@ export const StateAndEndpointHOC = (props) => {
         throw new Error(err)
       }
     },
+
     createAssets: async(data, callback)=>{
       try{
         const res = await axios.post('/assets',{ data }, config)
@@ -135,6 +143,7 @@ export const StateAndEndpointHOC = (props) => {
         throw new Error(err)
       }
     },
+
     editAssets: async(data, callback)=>{
       try{
         const res = await axios.put('/assets', { data }, config)
@@ -150,6 +159,7 @@ export const StateAndEndpointHOC = (props) => {
         throw new Error(err)
       }
     },
+
     logout: ()=>{
       localStorage.removeItem('strapi')
       setState({...initialState})

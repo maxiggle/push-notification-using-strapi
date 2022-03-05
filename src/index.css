@@ -139,6 +139,9 @@ h6 {
 .bg-acacac{
   background-color: #acacac
 }
+.bg-b{
+  background: #272626
+}
 .bg-CA9140{
   background: #CA9140;
 }
@@ -146,6 +149,12 @@ h6 {
   background: rgba(35,35,35, 0.1);
 }
 
+
+/* box-shadow */
+.box-shadow-default{
+  /* box-shadow: 0 1px 3px #00000019; */
+  box-shadow: 0 0 10px #7e7d7d19;
+}
 
 
 /* input */

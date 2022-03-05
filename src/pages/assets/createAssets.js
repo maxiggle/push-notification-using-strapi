@@ -12,11 +12,11 @@ const CreateAssets = ({token}) => {
   const [loading, setloading] = useState(false);
   const [error, setError] = useState(null)
   const [state, setstate] = useState({
-    name: null,
-    description: null,
-    model_number: null,	
-    validity_period: null,
-    category: null,
+    name: '',
+    description: '',
+    model_number: '',	
+    validity_period: '',
+    category: '',
     is_available: false, 	
     logs: [],
     is_expired: false,
@@ -46,6 +46,7 @@ const CreateAssets = ({token}) => {
       if(success){
         setError(null)
         subscribeUser(success.data)
+        StateManager?.endpoints.getAssets()
         navigate('/assets');
       }
       setloading(false);
@@ -115,7 +116,11 @@ const CreateAssets = ({token}) => {
 
             <div className="w-full mb-2">
               <p>Asset category</p>
-              <select value={state.category} className="inline-block w-full p-6 c-black" onChange={handleChange}>
+              <select 
+                value={state.category} 
+                className="inline-block w-full p-6 c-black" 
+                onChange={(e)=> setstate({...state, category: e.target.value})}
+              >
                 <option value="perishable">perishable</option>
                 <option value="nonperishable">nonperishable</option>
               </select>
@@ -158,7 +163,7 @@ const CreateAssets = ({token}) => {
               />
             </div> */}
 
-            <div className="w-full flex items-center justify-center pt-10">
+            <div className="w-full flex items-center justify-center py-10">
               <button
                 className="inline-block w-auto border px-4 py-4"
                 onClick={handleSubmit}

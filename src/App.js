@@ -1,11 +1,9 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import React from 'react';
 import AllRoutes from './components/Routes/AllRoutes';
 import { BrowserRouter } from "react-router-dom";
 import { generalContext, StateAndEndpointHOC } from './contexts/MainContext';
 
 function App(props) {
-  console.log(props);
-
   return (
     <div className="App">
       <BrowserRouter>

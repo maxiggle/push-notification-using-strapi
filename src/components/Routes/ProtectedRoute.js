@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Navigate, Outlet, Link } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Navbar from "../Navbar";
 import { generalContext } from '../../contexts/MainContext'
 
@@ -17,7 +17,7 @@ const ProtectedRoute = () => {
             <Outlet/>
           </div>
 
-          <div className="md:w-3/12 bg-acacac min-h-screen p-4">
+          <div className="hidden md:block md:w-3/12 bg-acacac min-h-screen p-4">
             <div className="flex items-center md:px-2 px-4">
               <div className="px-2">
                 <img src="https://picsum.photos/50/50" alt="" className="w-auto h-auto inline-block border-radius-50p bg-CA9140"/>
@@ -25,7 +25,6 @@ const ProtectedRoute = () => {
               <div className="px-2">
                 <div className="">
                   <p>{StateManager?.user?.email}</p>
-                  {/* <Link to="/" className="text-capitalize c-CA9140">LOGOUT </Link> */}
                   <button onClick={StateManager.endpoints.logout} className="text-capitalize c-CA9140">LOGOUT </button>
                 </div>
               </div>
