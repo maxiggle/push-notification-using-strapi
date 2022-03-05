@@ -20,7 +20,7 @@ const AllRoutes = () => {
       </Route>
       <Route element={<ProtectedRoute />}>
         <Route
-          path="/asset/create/:id"
+          path="/asset/+"
           element={<CreateAssets />}
         />
       </Route>

@@ -1,14 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { generalContext } from '../contexts/MainContext';
 import { subscribeUser } from '../subscription'
 
-const Signup = ({token}) => {
+const Signup = () => {
 
   const StateManager = useContext(generalContext)
-  const location = useLocation();
-  let navigate = useNavigate();
-
   const [loading, setloading] = useState(false);
   const [error, setError] = useState(null)
   const [state, setstate] = useState({
@@ -35,7 +32,6 @@ const Signup = ({token}) => {
         return;
       }
       setloading(false);
-      // navigate('/assets');
     })
   };
 

@@ -1,14 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { generalContext } from '../contexts/MainContext';
 import { subscribeUser } from '../subscription'
 
 const Login = ({token}) => {
 
   const StateManager = useContext(generalContext)
-  let navigate = useNavigate();
-
-
   const [loading, setloading] = useState(false);
   const [error, setError] = useState(null)
   const [state, setstate] = useState({
@@ -24,7 +21,6 @@ const Login = ({token}) => {
     e.preventDefault();
     setloading(true);
     !StateManager?.token && StateManager?.endpoints.login(state, async(success, error)=>{
-      setloading(false);
       if(error){
         setError(error.response.data.error.message);
         return alert(error.response.data.error.message);
@@ -34,7 +30,7 @@ const Login = ({token}) => {
         subscribeUser(success.data)
         return;
       }
-      // navigate('/assets');
+      setloading(false);
     })
   };
 

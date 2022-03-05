@@ -26,6 +26,12 @@ export const generalContext = createContext({})
 
 export const StateAndEndpointHOC = (props) => {
   const [state, setState] = React.useState(initialState);
+  let config = {
+    headers: {
+      'authorization': "Bearer " +state.token || null
+    }
+  }
+
   const endpoints = {
     login: async(params, callback)=> {
       try{
@@ -70,11 +76,6 @@ export const StateAndEndpointHOC = (props) => {
       }
     },
     getAssets: async(callback)=>{
-      let config = {
-        headers: {
-          'authorization': "Bearer " +state.token || null
-        }
-      }
       try{
         const res = await axios.get('/assets', config)
         console.log('endpoint result--get', res)
@@ -89,16 +90,55 @@ export const StateAndEndpointHOC = (props) => {
         throw new Error(err)
       }
     },
-    createAssets: async(state, callback)=>{
-      let config = {
-        headers: {
-          'authorization': state.token || null
-        },
-        data: state
-      }
+    getSingleAsset: async(id, callback)=>{
       try{
-        const res = await axios.post('/assets', config)
+        const res = await axios.get(`/assets/${id}`, config)
+        console.log('endpoint result--get', res)
+        if(callback && typeof callback === 'function'){
+          callback(res, null)
+        }
+        return res
+      }catch(err){
+        if(callback && typeof callback === 'function'){
+          callback(null, err)
+        }
+        throw new Error(err)
+      }
+    },
+    deleteSingleAsset: async(id, callback)=>{
+      try{
+        const res = await axios.delete(`/assets/${id}`, config)
+        console.log('endpoint result--get', res)
+        if(callback && typeof callback === 'function'){
+          callback(res, null)
+        }
+        return res
+      }catch(err){
+        if(callback && typeof callback === 'function'){
+          callback(null, err)
+        }
+        throw new Error(err)
+      }
+    },
+    createAssets: async(data, callback)=>{
+      try{
+        const res = await axios.post('/assets',{ data }, config)
         console.log('endpoint result--create', res)
+        if(callback && typeof callback === 'function'){
+          callback(res, null)
+        }
+        return res
+      }catch(err){
+        if(callback && typeof callback === 'function'){
+          callback(null, err)
+        }
+        throw new Error(err)
+      }
+    },
+    editAssets: async(data, callback)=>{
+      try{
+        const res = await axios.put('/assets', { data }, config)
+        console.log('endpoint result--edit', res)
         if(callback && typeof callback === 'function'){
           callback(res, null)
         }

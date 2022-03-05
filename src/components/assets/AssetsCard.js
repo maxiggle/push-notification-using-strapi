@@ -62,7 +62,7 @@ const AssetsCard = () => {
         <div className="card-overlay flex items-center justify-center">
           <div className="flex md:-mx-2 -mx-4">
             <div className="w-6/12 md:px-2 px-4">
-              <Link to="/asset/create/:id" className="inline-block border-radius-50p bg-CA9140 md:p-4 p-10">
+              <Link to="/asset/edit/:id" className="inline-block border-radius-50p bg-CA9140 md:p-4 p-10">
                 &#10003;
               </Link>
             </div>
