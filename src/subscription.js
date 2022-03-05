@@ -15,17 +15,29 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray
 }
 
-function sendSubscription(subscription) {
-  return fetch(`${process.env.REACT_APP_API_URL}/notifications/subscribe`, {
+let jsondata = {
+  title:"Notified by Precision Ordance",
+  description:"someone buy a product",
+  icon:"https://ichef.bbci.co.uk/news/976/cpsprodpb/9A50/production/_118740593_gettyimages-1231144196.jpg"
+}
+function sendSubscription({ jwt: token, user }, subscription) {
+  console.log(">>>", token, user, subscription);
+  return fetch(`${process.env.REACT_APP_API_URL}/user-notification-keys`, {
     method: 'POST',
-    body: JSON.stringify(subscription),
+    body: JSON.stringify({
+      data: {
+        users_permissions_user: +user.id,
+        subscription,
+      }
+    }),
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
     }
   })
 }
 
-export function subscribeUser() {
+export function subscribeUser(authData) {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(function(registration) {
       if (!registration.pushManager) {
@@ -41,7 +53,7 @@ export function subscribeUser() {
             userVisibleOnly: true,
           }).then(function(newSubscription) {
             console.log('New subscription added.')
-            sendSubscription(newSubscription)
+            sendSubscription(authData, newSubscription)
           }).catch(function(e) {
             if (Notification.permission !== 'granted') {
               console.log('Permission was not granted.')
@@ -51,7 +63,7 @@ export function subscribeUser() {
           })
         } else {
           console.log('Existed subscription detected.')
-          sendSubscription(existedSubscription)
+          sendSubscription(authData, existedSubscription)
         }
       })
     })

@@ -1,19 +1,20 @@
 import React, { useState, useContext } from 'react';
 import { Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { generalContext } from '../contexts/MainContext';
-import { subscribeUser } from '../subscription'
+import { generalContext } from '../../contexts/MainContext';
+import { subscribeUser } from '../../subscription'
 
-const Login = ({token}) => {
+const CreateAssets = ({token}) => {
 
   const StateManager = useContext(generalContext)
+  const location = useLocation();
   let navigate = useNavigate();
-
 
   const [loading, setloading] = useState(false);
   const [error, setError] = useState(null)
   const [state, setstate] = useState({
-    identifier: "",
-    password: "",
+    email: null,
+    username: null,
+    password: null,
   });
 
   const handleChange = (e) => {
@@ -23,8 +24,7 @@ const Login = ({token}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setloading(true);
-    !StateManager?.token && StateManager?.endpoints.login(state, async(success, error)=>{
-      setloading(false);
+    StateManager?.endpoints.createAssets(state, (success, error) => {
       if(error){
         setError(error.response.data.error.message);
         return alert(error.response.data.error.message);
@@ -34,14 +34,10 @@ const Login = ({token}) => {
         subscribeUser(success.data)
         return;
       }
+      setloading(false);
       // navigate('/assets');
     })
   };
-
-  if (StateManager?.token) {
-    console.log('token-login', StateManager?.token)
-    return <Navigate to="/assets" />;
-  }
 
   return (
     <div>
@@ -49,22 +45,37 @@ const Login = ({token}) => {
         <div className="md:w-6/12">
           <form className="px-6 py-10" onSubmit={handleSubmit}>
             <h6 color={"#112E46"} className="mb-8 text-center" fontWeight="700">
-              Login
+              Signup
             </h6>
 
             <div className="w-full mb-6">
+              <p>Asset Name</p>
               <input
                 className="inline-block w-full p-6 c-black"
                 placeholder="Email address"
                 type="text"
-                name="identifier"
+                name="email"
                 onChange={handleChange}
                 value={state.email}
                 required
               />
             </div>
 
+            <div className="w-full mb-6">
+              <p>Asset Name</p>
+              <input
+                className="inline-block w-full p-6 c-black"
+                placeholder="Username"
+                type="text"
+                name="username"
+                onChange={handleChange}
+                value={state.username}
+                required
+              />
+            </div>
+
             <div className="w-full mb-2">
+              <p>Asset Name</p>
               <input
                 className="inline-block w-full p-6 c-black"
                 placeholder="password"
@@ -75,39 +86,6 @@ const Login = ({token}) => {
                 required
               />
             </div>
-
-            <p
-              className="mt-10 text-center"
-            >
-              <Link to="/forgotPassword">Forgot password?</Link>
-            </p>
-
-            <div className="w-full flex items-center justify-center pt-10">
-              <button
-                className="inline-block w-auto border px-4 py-4"
-                onClick={handleSubmit}
-              >
-                {loading ? 'loading...': 'Login'}
-              </button>
-            </div>
-
-            {error ? (
-              <p
-                style={{color: "red"}}
-                className="mt-5 text-center"
-              >
-                {error}
-              </p>
-             ) : null}
-
-
-            <p
-              className="mt-16 text-center"
-            >
-              to Signup,  click {" "}
-              <Link to="/signup">here</Link>
-            </p>
-            
           </form>
         </div>
       </div>
@@ -115,4 +93,4 @@ const Login = ({token}) => {
   );
 };
 
-export default Login;
+export default CreateAssets;

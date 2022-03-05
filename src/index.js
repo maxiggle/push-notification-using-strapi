@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import { subscribeUser } from './subscription';
+// import { subscribeUser } from './subscription';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -24,4 +24,4 @@ serviceWorkerRegistration.register();
 reportWebVitals();
 
 // custom service worker
-subscribeUser()
+// subscribeUser()

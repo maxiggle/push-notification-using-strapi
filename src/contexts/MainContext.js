@@ -42,6 +42,7 @@ export const StateAndEndpointHOC = (props) => {
         }))
         return res
       }catch(err){
+        console.log(err.response.data.error.message)
         if(callback && typeof callback === 'function'){
           callback(null, err)
         }
@@ -68,7 +69,7 @@ export const StateAndEndpointHOC = (props) => {
         throw new Error(err)
       }
     },
-    getAssets: async()=>{
+    getAssets: async(callback)=>{
       let config = {
         headers: {
           'authorization': "Bearer " +state.token || null
@@ -77,22 +78,35 @@ export const StateAndEndpointHOC = (props) => {
       try{
         const res = await axios.get('/assets', config)
         console.log('endpoint result--get', res)
+        if(callback && typeof callback === 'function'){
+          callback(res, null)
+        }
         return res
       }catch(err){
+        if(callback && typeof callback === 'function'){
+          callback(null, err)
+        }
         throw new Error(err)
       }
     },
-    createAssets: async()=>{
+    createAssets: async(state, callback)=>{
       let config = {
         headers: {
           'authorization': state.token || null
-        }
+        },
+        data: state
       }
       try{
         const res = await axios.post('/assets', config)
         console.log('endpoint result--create', res)
+        if(callback && typeof callback === 'function'){
+          callback(res, null)
+        }
         return res
       }catch(err){
+        if(callback && typeof callback === 'function'){
+          callback(null, err)
+        }
         throw new Error(err)
       }
     },

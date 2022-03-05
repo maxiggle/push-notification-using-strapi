@@ -1,6 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import AssetsPage from "../../pages/assets";
+import CreateAssets from "../../pages/assets/createAssets";
+import EditAssets from "../../pages/assets/editAsset";
 import Login from "../../pages/login";
 import Signup from "../../pages/signup";
 import ProtectedRoute from "./ProtectedRoute";
@@ -14,6 +16,18 @@ const AllRoutes = () => {
         <Route
           path="/assets"
           element={<AssetsPage />}
+        />
+      </Route>
+      <Route element={<ProtectedRoute />}>
+        <Route
+          path="/asset/create/:id"
+          element={<CreateAssets />}
+        />
+      </Route>
+      <Route element={<ProtectedRoute />}>
+        <Route
+          path="/asset/edit/:id"
+          element={<EditAssets />}
         />
       </Route>
       <Route

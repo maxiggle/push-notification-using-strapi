@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { generalContext } from '../contexts/MainContext';
+import { subscribeUser } from '../subscription'
 
 const Signup = ({token}) => {
 
@@ -9,9 +10,11 @@ const Signup = ({token}) => {
   let navigate = useNavigate();
 
   const [loading, setloading] = useState(false);
+  const [error, setError] = useState(null)
   const [state, setstate] = useState({
-    email: "",
-    password: "",
+    email: null,
+    username: null,
+    password: null,
   });
 
   const handleChange = (e) => {
@@ -21,7 +24,16 @@ const Signup = ({token}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setloading(true);
-    !StateManager?.token && StateManager?.endpoints.login(state, (success, error) => {
+    !StateManager?.token && StateManager?.endpoints.signup(state, (success, error) => {
+      if(error){
+        setError(error.response.data.error.message);
+        return alert(error.response.data.error.message);
+      }
+      if(success){
+        setError(null)
+        subscribeUser(success.data)
+        return;
+      }
       setloading(false);
       // navigate('/assets');
     })
@@ -53,6 +65,18 @@ const Signup = ({token}) => {
               />
             </div>
 
+            <div className="w-full mb-6">
+              <input
+                className="inline-block w-full p-6 c-black"
+                placeholder="Username"
+                type="text"
+                name="username"
+                onChange={handleChange}
+                value={state.username}
+                required
+              />
+            </div>
+
             <div className="w-full mb-2">
               <input
                 className="inline-block w-full p-6 c-black"
@@ -79,6 +103,15 @@ const Signup = ({token}) => {
                 {loading ? 'loading...': 'Signup'}
               </button>
             </div>
+
+            {error ? (
+              <p
+                style={{color: "red"}}
+                className="mt-5 text-center"
+              >
+                {error}
+              </p>
+             ) : null}
 
 
             <p
