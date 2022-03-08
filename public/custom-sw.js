@@ -4,7 +4,7 @@ self.addEventListener('push', event => {
   console.log('event content', event.data);
   console.log('self registration', self.registration);
   // const data = event.data.json()
-  const data = event.data.json();
+  const data = event.data.json;
   console.log('New notification', data)
   // const options = {
   //   body: data,
