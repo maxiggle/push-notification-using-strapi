@@ -3,7 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { generalContext } from '../contexts/MainContext';
 import { subscribeUser } from '../subscription'
 
-const Login = ({token}) => {
+const Login = () => {
 
   const StateManager = useContext(generalContext)
   const [loading, setloading] = useState(false);

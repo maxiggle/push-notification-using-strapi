@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useLayoutEffect, useEffect, useState, useContext, useCallback, useMemo } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { generalContext } from '../../contexts/MainContext';
 import { subscribeUser } from '../../subscription'
@@ -8,7 +8,6 @@ const EditAssets = () => {
   const StateManager = useContext(generalContext)
   const { id } = useParams();
   let navigate = useNavigate();
-
   const [loading, setloading] = useState(false);
   const [error, setError] = useState(null)
   const [state, setstate] = useState({
@@ -54,10 +53,11 @@ const EditAssets = () => {
     })
   };
 
-  useEffect(() => {
+
+  const getAsset =  useCallback(()=>{
     console.log('location', id)
     setloading(true);
-    StateManager?.endpoints.getSingleAsset(id, (success, error) => {
+    return StateManager?.endpoints.getSingleAsset(id, (success, error) => {
       if(error){
         setError(error.response.data.error.message);
         alert(error.response.data.error.message);
@@ -65,7 +65,7 @@ const EditAssets = () => {
       if(success){
         setError(null)
         subscribeUser(success)
-        setstate({
+        setstate(()=> ({
           name: StateManager?.assets?.asset?.attributes?.name,
           description: StateManager?.assets?.asset?.attributes?.description,
           model_number: StateManager?.assets?.asset?.attributes?.model_number,	
@@ -74,15 +74,17 @@ const EditAssets = () => {
           is_available: StateManager?.assets?.asset?.attributes?.is_available, 	
           logs: [],
           is_expired: StateManager?.assets?.asset?.attributes?.is_expired,
-        })
+        }))
       }
       setloading(false);
     })
-  }, 
-  // [StateManager?.assets?.asset]
-  []
-  )
+  },[StateManager.assets.asset, id]);
+
   
+ 
+  useEffect(() => {
+    getAsset()
+  }, [StateManager.assets.asset, id])
 
   return (
     <div>

@@ -13,7 +13,7 @@ const AssetsCard = (props) => {
   const [error, setError] = useState(null)
 
   const deleteAssets = ()=>{
-    !StateManager?.token && StateManager?.endpoints.deleteSingleAsset(props.data.id, (success, error) => {
+    StateManager?.token && StateManager?.endpoints.deleteSingleAsset(props.data.id, (success, error) => {
       if(error){
         setError(error.response.data.error.message);
         return alert(error.response.data.error.message);
@@ -21,6 +21,7 @@ const AssetsCard = (props) => {
       if(success){
         setError(null)
         subscribeUser(success.data)
+        StateManager?.endpoints.getAssets()
         return;
       }
       setloading(false);

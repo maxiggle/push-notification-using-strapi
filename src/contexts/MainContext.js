@@ -64,7 +64,7 @@ export const StateAndEndpointHOC = (props) => {
         if(callback && typeof callback === 'function'){
           callback(res, null)
         }
-        setState({...state, token: res?.data?.jwt, user: res?.data?.user})
+        setState(() => ({...state, token: res?.data?.jwt, user: res?.data?.user}))
         localStorage.setItem('strapi', JSON.stringify({
           token: res?.data?.jwt,
           user: res?.data?.user
@@ -85,7 +85,7 @@ export const StateAndEndpointHOC = (props) => {
         if(callback && typeof callback === 'function'){
           callback(res, null)
         }
-        setState({ ...state, assets:{...state.assets, allAssets: res?.data?.data} })
+        setState(() => ({ ...state, assets:{...state.assets, allAssets: res?.data?.data} }))
         return res
       }catch(err){
         if(callback && typeof callback === 'function'){
@@ -99,7 +99,7 @@ export const StateAndEndpointHOC = (props) => {
       try{
         const res = await axios.get(`/assets/${id}`, config)
         console.log('endpoint result--get single asset', res?.data?.data)
-        setState({ ...state, assets:{...state.assets, asset: res?.data?.data} })
+        setState(()=> ({...state, assets:{...state.assets, asset: res?.data?.data} }))
         if(callback && typeof callback === 'function'){
           callback(res, null)
         }
