@@ -20,19 +20,22 @@ let jsondata = {
   description:"someone buy a product",
   icon:"https://ichef.bbci.co.uk/news/976/cpsprodpb/9A50/production/_118740593_gettyimages-1231144196.jpg"
 }
-function sendSubscription({ jwt: token, user }, subscription) {
-  console.log(">>>", token, user, subscription);
+function sendSubscription(data, subscription) {
+  // const { jwt: token, user }= data
+  const { jwt, ...rest }= data
+  console.log(">>>", jwt, rest, subscription);
   return fetch(`${process.env.REACT_APP_API_URL}/user-notification-keys`, {
     method: 'POST',
     body: JSON.stringify({
       data: {
-        users_permissions_user: +user.id,
+        // users_permissions_user: +user.id,
+        ...rest,
         subscription,
       }
     }),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${jwt}`
     }
   })
 }

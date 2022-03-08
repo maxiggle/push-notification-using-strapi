@@ -4,10 +4,11 @@ import { BrowserRouter } from "react-router-dom";
 import { generalContext, StateAndEndpointHOC } from './contexts/MainContext';
 
 function App(props) {
+  const value = React.useMemo(() => props, [props]);
   return (
     <div className="App">
       <BrowserRouter>
-        <generalContext.Provider value={props}>
+        <generalContext.Provider value={value}>
           <AllRoutes />
         </generalContext.Provider>
       </BrowserRouter>
