@@ -1,18 +1,18 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Link, useParams, useNavigate, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { subscribeUser } from '../../subscription'
 import { generalContext } from '../../contexts/MainContext';
 
 const AssetsCard = (props) => {
 
   const StateManager = useContext(generalContext)
-  const { id } = useParams();
-  let navigate = useNavigate();
+
 
   const [loading, setloading] = useState(false);
   const [error, setError] = useState(null)
 
   const deleteAssets = ()=>{
+    setloading(true)
     StateManager?.token && StateManager?.endpoints.deleteSingleAsset(props.data.id, (success, error) => {
       if(error){
         setError(error.response.data.error.message);
@@ -25,7 +25,6 @@ const AssetsCard = (props) => {
         return;
       }
       setloading(false);
-      // navigate('/assets');
     })
   }
 

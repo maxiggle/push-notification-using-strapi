@@ -17,9 +17,7 @@ const CreateAssets = ({token}) => {
     model_number: '',	
     validity_period: '',
     category: '',
-    is_available: false, 	
-    logs: [],
-    is_expired: false,
+    is_available: false,
   });
 
   const handleChange = (e) => {
@@ -121,6 +119,7 @@ const CreateAssets = ({token}) => {
                 className="inline-block w-full p-6 c-black" 
                 onChange={(e)=> setstate({...state, category: e.target.value})}
               >
+                <option value="" selected="selected" disabled>choose an asset category</option>
                 <option value="perishable">perishable</option>
                 <option value="nonperishable">nonperishable</option>
               </select>
@@ -138,37 +137,12 @@ const CreateAssets = ({token}) => {
               />
             </div>
 
-            <div className="w-full mb-2">
-              <p>is Asset expired?</p>
-              <input
-                className="p-6 c-black"
-                type="checkbox"
-                name="is_expired"
-                onChange={handleChange}
-                value={state.is_expired}
-                required
-              />
-            </div>
-
-            {/* <div className="w-full mb-2">
-              <p>logs</p>
-              <input
-                className="inline-block w-full p-6 c-black"
-                placeholder="logs"
-                type="text"
-                name="logs"
-                onChange={handleChange}
-                value={state.logs}
-                required
-              />
-            </div> */}
-
             <div className="w-full flex items-center justify-center py-10">
               <button
                 className="inline-block w-auto border px-4 py-4"
                 onClick={handleSubmit}
               >
-                {loading ? 'loading...': 'edit asset'}
+                {loading ? 'loading...': 'create asset'}
               </button>
             </div>
           </form>

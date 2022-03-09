@@ -1,7 +1,6 @@
-import React, { useLayoutEffect, useEffect, useState, useContext, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { generalContext } from '../../contexts/MainContext';
-import { subscribeUser } from '../../subscription'
 
 const EditAssets = () => {
 
@@ -18,7 +17,6 @@ const EditAssets = () => {
     category: null,
     is_available: false, 	
     logs: [],
-    is_expired: false,
   });
 
   const handleChange = (e) => {
@@ -44,7 +42,6 @@ const EditAssets = () => {
       }
       if(success){
         setError(null)
-        subscribeUser(success.data)
         StateManager?.endpoints.getSingleAsset(id)
         StateManager?.endpoints.getAssets()
         navigate('/assets');
@@ -64,7 +61,6 @@ const EditAssets = () => {
       }
       if(success){
         setError(null)
-        subscribeUser(success)
         setstate(()=> ({
           name: StateManager?.assets?.asset?.attributes?.name,
           description: StateManager?.assets?.asset?.attributes?.description,
@@ -73,7 +69,6 @@ const EditAssets = () => {
           category: StateManager?.assets?.asset?.attributes?.category,
           is_available: StateManager?.assets?.asset?.attributes?.is_available, 	
           logs: [],
-          is_expired: StateManager?.assets?.asset?.attributes?.is_expired,
         }))
       }
       setloading(false);
@@ -172,32 +167,6 @@ const EditAssets = () => {
                   required
                 />
               </div>
-
-              <div className="w-full mb-2">
-                <p>is Asset expired?</p>
-                <input
-                  className="p-6 c-black"
-                  type="checkbox"
-                  name="is_expired"
-                  onChange={handleChange}
-                  checked={state.is_expired}
-                  value={state.is_expired}
-                  required
-                />
-              </div>
-
-              {/* <div className="w-full mb-2">
-                <p>logs</p>
-                <input
-                  className="inline-block w-full p-6 c-black"
-                  placeholder="logs"
-                  type="text"
-                  name="logs"
-                  onChange={handleChange}
-                  value={state.logs}
-                  required
-                />
-              </div> */}
 
               <div className="w-full flex items-center justify-center pt-10">
                 <button
