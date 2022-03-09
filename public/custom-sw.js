@@ -3,16 +3,30 @@ self.addEventListener('push', event => {
   console.log('event to show on browser', event);
   console.log('event content', event.data);
   console.log('self registration', self.registration);
-  // const data = event.data.json()
-  const data = event.data.json;
+  let data;
+  if(event.data){
+    data = event.data.json();
+  }
   console.log('New notification', data)
-  // const options = {
-  //   body: data,
-  // }
   const options = {
-    body: data.body,
+    body: data.message || "new notification",
   }
   event.waitUntil(
-    self.registration.showNotification(data.title, options)
+    self.registration.showNotification("new notification", options)
   );
 })
+
+// self.addEventListener("push", (event) => {
+//   if (event.data) {
+//     try {
+//       const data = JSON.parse(event.data.json());
+//       event.waitUntil(
+//         self.registration.showNotification('new notification has been added', {
+//           body: data.message || "new notification",
+//         })
+//       );
+//     } catch (e) {
+//       console.error('push event data parse fail');
+//     }
+//   }
+// });
