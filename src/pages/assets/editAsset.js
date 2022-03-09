@@ -16,7 +16,6 @@ const EditAssets = () => {
     validity_period: null,
     category: null,
     is_available: false, 	
-    logs: [],
   });
 
   const handleChange = (e) => {
@@ -68,7 +67,6 @@ const EditAssets = () => {
           validity_period: StateManager?.assets?.asset?.attributes?.validity_period,
           category: StateManager?.assets?.asset?.attributes?.category,
           is_available: StateManager?.assets?.asset?.attributes?.is_available, 	
-          logs: [],
         }))
       }
       setloading(false);
