@@ -148,6 +148,7 @@ const EditAssets = () => {
                   className="inline-block w-full p-6 c-black" 
                   onChange={(e)=> setstate({...state, category: e.target.value})}
                 >
+                  <option value="" selected="selected" disabled>choose an asset category</option>
                   <option value="perishable">perishable</option>
                   <option value="nonperishable">nonperishable</option>
                 </select>
