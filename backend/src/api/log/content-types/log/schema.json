@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "logs",
+  "info": {
+    "singularName": "log",
+    "pluralName": "logs",
+    "displayName": "Log"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "asset": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::asset.asset",
+      "inversedBy": "logs"
+    },
+    "collected_at": {
+      "type": "datetime"
+    },
+    "returned_at": {
+      "type": "datetime"
+    },
+    "users_permissions_users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}
